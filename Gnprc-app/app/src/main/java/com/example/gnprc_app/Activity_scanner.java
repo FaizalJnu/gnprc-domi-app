@@ -8,6 +8,9 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,11 +25,21 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Activity_scanner extends AppCompatActivity {
 
+    private ImageView captureIV;
+    private TextView resultIV;
+    private Button snapbtn, capturebtn;
+    private Bitmap imageBitmap;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_scanner);
+        captureIV = findViewById(R.id.idIVCaptureImage);
+        snapbtn = findViewById(R.id.idButtonSnap);
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
