@@ -35,3 +35,8 @@ google-services.json
 #datasets
 datasets/
 /Model/preprocessed_data/
+tf/
+Model/logs/
+Model/object_detection_model.tflite
+Model/train.tfrecord
+Model/val.tfrecord
