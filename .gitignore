@@ -40,3 +40,4 @@ Model/logs/
 Model/object_detection_model.tflite
 Model/train.tfrecord
 Model/val.tfrecord
+Model/models

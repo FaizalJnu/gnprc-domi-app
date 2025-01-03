@@ -35,6 +35,15 @@ def calibrate_gauge(filename,folder_path):
 	img = cv2.imread(folder_path + "/" + filename + ".jpg")
 	height, width = img.shape[:2]
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  #convert to gray
+    #gray = cv2.GaussianBlur(gray, (5, 5), 0)
+    # gray = cv2.medianBlur(gray, 5)
+
+    #for testing, output gray image
+    #cv2.imwrite('gauge-%s-bw.%s' %(gauge_number, file_type),gray)
+
+    #detect circles
+    #restricting the search from 35-48% of the possible radii gives fairly good results across different samples.  Remember that
+    #these are pixel values which correspond to the possible radii search range.
 	circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1, 20, np.array([]), 100, 50, int(height*0.35), int(height*0.48))
     # average found circles, found it to be more accurate than trying to tune HoughCircles parameters to get just the right one
 	a, b, c = circles.shape
@@ -169,6 +178,14 @@ def get_current_value(img, min_angle, max_angle, min_value, max_value, x, y, r, 
 				# add to final list
 				final_line_list.append([x1, y1, x2, y2])
 
+    #testing only, show all lines after filtering
+    # for i in range(0,len(final_line_list)):
+    #     x1 = final_line_list[i][0]
+    #     y1 = final_line_list[i][1]
+    #     x2 = final_line_list[i][2]
+    #     y2 = final_line_list[i][3]
+    #     cv2.line(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
     # assumes the first line is the best one
 	x1 = final_line_list[0][0]
 	y1 = final_line_list[0][1]
@@ -190,6 +207,12 @@ def get_current_value(img, min_angle, max_angle, min_value, max_value, x, y, r, 
 		y_angle = y - y2
     # take the arc tan of y/x to find the angle
 	res = np.arctan(np.divide(float(y_angle), float(x_angle)))
+    #np.rad2deg(res) #coverts to degrees
+
+    # print x_angle
+    # print y_angle
+    # print res
+    # print np.rad2deg(res)
 
     #these were determined by trial and error
 	res = np.rad2deg(res)
